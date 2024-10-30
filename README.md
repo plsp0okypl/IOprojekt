@@ -1,6 +1,8 @@
 Wymagania niefunkcjonalne:
 
-
+Wydajność: Strona musi ładować się w czasie nie dłuższym niż 2 sekundy.
+Bezpieczeństwo: Implementacja HTTPS dla bezpiecznego przeglądania.
+Responsywność: Strona musi dobrze działać na różnych urządzeniach (komputery, tablety, smartfony).
 
 
 Wymagania funkcjonalne:
@@ -13,7 +15,8 @@ Panel administracyjny: Administratorzy muszą mieć dostęp do zarządzania prod
 
 Potencjalne ryzyka:
 
-Kod: Niski stopien umiejetnosci programistow
+Kod: Niski stopien umiejetnosci programistow.
+Problemy z wydajnoscia: odnosi sie to do punktu wyzej
 
 Lista ogólnych zadań do wykonania:
 
