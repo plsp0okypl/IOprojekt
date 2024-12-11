@@ -1,30 +1,31 @@
+// DatabaseHelper.cs
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace Projekt
 {
-    class Program
+    public class DatabaseHelper
     {
-        static void Main(string[] args)
+        private string _connectionString;
+
+        public DatabaseHelper(string connectionString)
         {
-            string connectionString = "your_connection_string_here"; // Podaj odpowiedni connection string do bazy danych
+            _connectionString = connectionString;
+        }
 
-            Console.WriteLine("Łączenie z bazą danych...");
-            Product[] products;
+        public List<Product> GetProducts()
+        {
+            var products = new List<Product>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                Console.WriteLine("Połączono z bazą danych.");
 
-                // Pobierz produkty z bazy danych
                 string query = "SELECT ID, Name, Count, Price FROM Products";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    var productList = new System.Collections.Generic.List<Product>();
-
                     while (reader.Read())
                     {
                         Product product = new Product
@@ -34,12 +35,39 @@ namespace Projekt
                             Count = reader.GetInt32(2),
                             Price = reader.GetDouble(3)
                         };
-                        productList.Add(product);
+                        products.Add(product);
                     }
-
-                    products = productList.ToArray();
                 }
             }
+
+            return products;
+        }
+    }
+
+    public class Product
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public int Count { get; set; }
+        public double Price { get; set; }
+    }
+}
+
+// Program.cs
+using System;
+using System.Linq;
+
+namespace Projekt
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string connectionString = "your_connection_string_here"; // Podaj odpowiedni connection string do bazy danych
+            DatabaseHelper dbHelper = new DatabaseHelper(connectionString);
+
+            Console.WriteLine("Łączenie z bazą danych...");
+            var products = dbHelper.GetProducts().ToArray();
 
             Console.WriteLine("\nRACHUNEK:");
             double sumPrice = 0;
@@ -171,13 +199,5 @@ namespace Projekt
                 }
             } while (!close);
         }
-    }
-
-    class Product
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int Count { get; set; }
-        public double Price { get; set; }
     }
 }
