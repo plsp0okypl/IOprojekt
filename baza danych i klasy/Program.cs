@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        var connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\user\source\repos\ConsoleApp1\ConsoleApp1\Database1.mdf;Integrated Security=True";
+        var connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\studentath\Documents\GitHub\IOprojekt\baza danych i klasy\Database1.mdf;Integrated Security=True";
 
         var dbHelper = new DatabaseHelper(connectionString);
 
@@ -12,6 +12,9 @@ class Program
         {
             // Upewnij się, że baza danych i tabela istnieją
             dbHelper.EnsureDatabaseAndTableExist();
+
+            // Dodaj domyślne produkty
+            dbHelper.AddDefaultProducts();
 
             // Wyświetl menu z opcjami
             dbHelper.DisplayMenu();
@@ -26,4 +29,5 @@ class Program
             Console.WriteLine($"Wystąpił błąd: {ex.Message}");
         }
     }
+
 }
